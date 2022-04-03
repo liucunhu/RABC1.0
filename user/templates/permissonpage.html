@@ -1,0 +1,141 @@
+{% extends "basiclayout.html" %}
+{% load webtagplugs %}
+
+
+{% block stylecss %}
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="panel panel-success ">
+                    <div class="panel-heading panel-success">
+                        <h3 class="panel-title"><i class="fa fa-address-book fa-fw"></i>菜单<a href="{% url 'menu_add' %}"
+                                                                                             class="btn btn-success btn-xs pull-right">添加</a>
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table .table-condensed">
+                            <tr>
+
+                                <th>名称</th>
+                                <th>图标</th>
+                                <th>操作</th>
+                            </tr>
+                            {% if menulist %}
+                                {% for menu in menulist %}
+                                    <tr>
+                                        <td><a href="{% url 'permissionlist' %}?mid={{ menu.id }}">{{ menu.name }}</a></td>
+                                        <td><i class="{{ menu.ico }}"></i></td>
+                                        <td><a href="{% url 'menu_edit' menu.id %}"><i class="fa fa-edit fa-fw"></i></a>|<a
+                                                href="{% url 'menu_del' menu.id %}"><i class="fa fa-times"></i></a></td>
+                                    </tr>
+                                {% endfor %}
+                                {% else %}
+                                    <span>未查到相应数据请添加</span>
+                            {% endif %}
+                            <tr>
+                                <th></th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="panel panel-success">
+                    <div class="panel-heading ">
+                        <div class=""><h3 class="panel-title "><span><i class="fa fa-cubes fa-fw "></i>权限</span> <a
+                                href="/umanage/permissionadd/?methodtype=add" methodtype="add"
+                                class="btn btn-success btn-xs pull-right">添加</a>
+                                <a
+                                href="{% url 'muladdpermission' %}" methodtype="add"
+                                class="btn btn-success btn-xs pull-right">批量操作</a>
+                        </h3></div>
+
+
+                    </div>
+                    <div class="panel-body">
+                        <table class="table">
+                            <tr>
+                                <th>权限名称</th>
+                                <th>父级菜单</th>
+                                <th>别名</th>
+                                <th>是否为菜单</th>
+                                <th>操作</th>
+                            </tr>
+                            {% if perlist %}
+
+                                {% for key,value in perlist.items %}
+
+                                    <tr class="parent">
+                                        <td><i class="fa fa-caret-right fa-caret-down watchsubperlist"></i>{{ value.title }}
+                                        </td>
+                                        <td>{% if value.pid%}
+                                            {{ value.pid }}
+                                        {% else %}
+                                            无
+                                        {% endif %}
+                                        </td>
+                                        <td>{{ value.url_name }}</td>
+                                        <td>{% if value.is_menu %}
+                                            是
+                                        {% else %}
+                                            否
+                                        {% endif %}
+                                        </td>
+                                        <td><a href="{% url 'permission_edit' value.id %}"><i class="fa fa-edit fa-fw"></i></a>|<a
+                                                href="{% url 'permission_del' value.id %}"><i class="fa fa-times"></i></a>
+                                        </td>
+
+                                    </tr>
+                                    {% for subPer in value.children %}
+                                        <tr class="sub-menu hidden">
+                                            <td>{{ subPer.title }}</td>
+                                            <td>{% if subPer.pid_id %}
+                                                {{ subPer.pid_id }}
+                                            {% else %}
+                                                无
+                                            {% endif %}
+                                            </td>
+                                            <td>{{ subPer.url_name }}</td>
+                                            <td>{% if subPer.is_menu %}
+                                                是
+                                            {% else %}
+                                                否
+                                            {% endif %}
+                                            </td>
+                                            <td><a href="{% url 'permission_edit'  subPer.id %}"><i
+                                                    class="fa fa-edit fa-fw"></i></a>|<a
+                                                    href="{% url 'permission_del'  subPer.id %}"><i class="fa fa-times"></i></a>
+                                            </td>
+
+                                        </tr>
+                                    {% endfor %}
+
+                                {% endfor %}
+                            {% else %}
+                                <tr><td><span>未查到相应数据请添加</span></td></tr>
+                            {% endif %}
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block javascript %}
+    <script>
+
+        $('.parent').click(function () {
+
+            $(this).find('i.watchsubperlist').toggleClass('fa-caret-right');
+
+            $(this).nextUntil('.parent').toggleClass('hidden');
+
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="/static/awesome/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+<style>
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    ul li {
+        padding:10px;
+        padding-left: 0;
+        width:80%;
+
+    }
+    ul li i {
+        font-size:18px;
+        margin-left: 5px;
+        color:black;
+    }
+</style>
+
+</head>
+<body>
+   <li class="fa fa-address-book-o"></li>
+
+   {% for value,item in fonts.items%}
+   <ul>
+        <span>{{value}}</span>
+            <li>{% for fontm in item %}
+        <input type="radio" name="icons"/>{{fontm.htmltag|safe}}
+   {% endfor %}</li>
+   </ul>
+
+
+
+    {% endfor %}
+
+
+
+
+</body>
+</html>

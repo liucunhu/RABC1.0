@@ -1,0 +1,142 @@
+{% extends 'basiclayout.html' %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3 user-list">
+            <div class="panel panel-success">
+              <div class="panel-heading ">
+                <h3 class="panel-title ">用户列表</h3>
+              </div>
+              <div class="panel-body">
+                <table class="table table-condensed table-hover">
+                    <tr>
+                        <th>编号</th>
+                        <th>账号</th>
+
+                    </tr>
+                    {% if all_user %}
+                        {% for user in all_user %}
+                            <tr>
+                                <td class="hidden">{{ user.id }}</td>
+                                <td>{{ forloop.counter }}</td>
+                                <td><a href="{% url 'displaydispachers'%}?uid={{ user.id }}">{{ user.uname }}</a></td>
+
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                    <tr><td colspan="4">未查到用户信息，请添加</td></tr>
+
+                    {% endif %}
+                </table>
+              </div>
+            </div>
+        </div>
+        <form method="post" action="{% url 'displaydispachers'  %}">
+            {% csrf_token %}
+
+            <div class="col-md-3 role-list">
+            <div class="panel panel-success">
+              <div class="panel-heading ">
+                <h3 class="panel-title ">角色列表
+                    <span class="pull-right">
+                        {% if role_save_btn %}
+                              {{ role_save_btn|safe }}
+                        {% endif %}
+
+                    </span></h3>
+              </div>
+              <div class="panel-body">
+                  <table class="table table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th>编号</th>
+                                <th>选择</th>
+                                <th>名称</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <input type="hidden" name="method_type" value="update_role">
+                            {% if all_role_info %}
+                                {% for role in all_role_info %}
+                                    <tr>
+                                        <span class="hidden">{{ role.id }}</span>
+                                        <td>{{ forloop.counter }}</td>
+                                        {% if role.id in user_has_role %}
+                                        <td> <input type="checkbox" value="{{ role.id }}" name="{{ role.id }}" checked></td>
+                                        {% else %}
+                                            <td> <input type="checkbox" value="{{ role.id }}" name="{{ role.id }}"></td>
+                                        {% endif %}
+                                        <td><a href="{% url 'displaydispachers'  %}?rid={{ role.id }} ">{{ role.rname }}</a></td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr><td colspan="2">未查到数据请添加</td></tr>
+                            {% endif %}
+                        </tbody>
+
+
+                  </table>
+              </div>
+            </div>
+        </div>
+        </form>
+        <form method="post" action="{% url 'displaydispachers'  %}">
+
+            <div class="col-md-6 per-list">
+                    <div class="panel panel-success">
+                      <div class="panel-heading ">
+                        <h3 class="panel-title ">权限展示
+                            {% if permission_save_btn %}
+                            {{permission_save_btn|safe }}
+                            {% endif %}
+                        </h3>
+                      </div>
+                      <div class="panel-body">
+                        <table class="table table-condensed ">
+                         {% csrf_token %}
+                           {% for key,permission in permission_infos.items %}
+
+                               <tr class="bg-primary menu-title"><td colspan="7" >{{ permission.title }}</td></tr>
+                                <input type="hidden" name="method_type" value="update_permission">
+                                    <tr>
+                                        {% for subper in permission.children %}
+                                            {% for key ,sec_per in subper.items  %}
+                                                <tr  >
+                                                    {% if sec_per.id in role_has_permission %}
+                                                    <td rowspan=""><input type="checkbox" name="{{ sec_per.id }}" name="{{ sec_per.id }}" checked>{{ sec_per.title }}</td>
+                                                    {% else %}
+                                                        <td><input type="checkbox" name="{{ sec_per.id }}" name="{{ sec_per.id }}" >{{ sec_per.title }}</td>
+
+                                                    {% endif %}
+                                                </tr>
+                                                <tr>
+                                                    {% for subitem in sec_per.children %}
+                                                        {% for key,sub_per in subitem.items %}
+                                                         {% if sub_per.id in role_has_permission %}
+                                                        <td><input type="checkbox" name="{{ sub_per.id }}" name="{{ sub_per.id }}" checked>{{ sub_per.title }}</td>
+                                                          {% else %}
+                                                              <td><input type="checkbox" name="{{ sub_per.id }}" name="{{ sub_per.id }}">{{ sub_per.title }}</td>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                     {% endfor %}
+                                                </tr>
+                                                {% endfor %}
+                                         {% endfor %}
+
+                                    </tr>
+
+                            {% endfor %}
+                        </table>
+                      </div>
+                    </div>
+                </div>
+        </form>
+
+
+    </div>
+
+</div>
+
+{% endblock %}

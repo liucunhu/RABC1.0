@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>运维管理平台</title>
+</head>
+<body>
+
+<form action="{% url 'ulogin' %} " method="post">
+    {% csrf_token %}
+    用户名：<input type="text" name="name">
+    密码：<input type="password" name="pwd">
+    <input type="submit" value="提交">
+</form>
+</body>
+</html>

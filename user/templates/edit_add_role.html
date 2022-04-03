@@ -1,0 +1,14 @@
+{% extends 'basiclayout.html' %}
+{% block content %}
+ <form method="post" novalidate>
+    {% csrf_token %}
+
+   {% for role in role_model_form %}
+        {{ role.label }}{{ role }}<span style="color:red">{{ role.errors.0 }}</span>
+
+
+ {% endfor %}
+    <input type="submit" value="提交">
+ </form>
+
+{% endblock %}

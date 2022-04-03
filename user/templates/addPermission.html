@@ -1,0 +1,29 @@
+{% extends 'Basiclayout.html' %}
+{% block content %}
+<style>
+  ul{
+      list-style-type: none;
+  }
+</style>
+    <dov class="content">
+        <div class="row">
+            <div class="col-md-10 col-xs-offset-1" oninvalid="">
+                <div class="form-group">
+                    <form class="form" method="post" novalidate>
+                        {% csrf_token %}
+                        {% for  field in form %}
+                            <span style="color: red">{{ field.errors }}</span>
+                            <span>{{ field.label_tag }}</span><span>{{ field|safe }}</span>
+                        {% endfor %}
+                        <input type="submit"  class="btn btn-success pull-right" value="保存">
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </dov>
+
+{% endblock %}

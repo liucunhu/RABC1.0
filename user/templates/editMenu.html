@@ -1,0 +1,48 @@
+{% extends "basiclayout.html" %}
+{% load webtagplugs %}
+
+
+{% block stylecss %}
+    <style>
+       ul{
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li {
+            margin: 0;
+            padding-left: 20px;
+            width: 10px;
+            display: inline-block;
+        }
+        ul li i {
+            font-size: 18px;
+        }
+        #id_ico div{
+            display: inline-block;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 ">
+                <form class="form" method="post" novalidate>
+
+                    {% csrf_token %}
+
+                        {% for items in disalpayMenu %}
+                            <span>{{ items.errors }}</span>
+                            <span>{{ items.label_tag }}</span><span>{{ items }}</span>
+                        {% endfor %}
+                    <input type="submit" class="btn-success form-control" value="保存">
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+{% endblock %}

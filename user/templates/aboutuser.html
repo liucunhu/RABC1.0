@@ -1,0 +1,78 @@
+{% extends "basiclayout.html" %}
+
+
+
+{% block stylecss %}
+{% endblock %}
+
+{% load webtagplugs %}
+
+
+{#        {% for k,v in request.session.menus.items %}#}
+{##}
+{#        <div class="first"><a class="list-group-item first-menu"><i class="{{ v.ico }}"></i><span >{{ v.title }}</span></a></div>#}
+{##}
+{#            <div  class="sub {{ v.class }}">#}
+{#                {% for sub_menu in v.child %}#}
+{#                <a href="{{ sub_menu.url }}" class="list-group-item  sub-menu" >{{ sub_menu.title }}</a>#}
+{#                {% endfor %}#}
+{##}
+{#            </div>#}
+{#        {% endfor %}#}
+
+{% block content %}
+    <a class="btn btn-success btn-xs " href="{% url 'adduser'  %}">添加用户</a>
+    <table class="table table table-bordered">
+            <tr>
+                <th>序号</th>
+               <th>编码</th>
+               <th>用户名</th>
+               <th>姓名</th>
+               <th>密码</th>
+               <th>邮箱</th>
+               <th>手机</th>
+                <th>角色</th>
+                <th>状态</th>
+
+               <th>操作</th>
+
+            </tr>
+        {% for user in all_user %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+               <td>{{ user.id }}</td>
+               <td>{{ user.uname }}</td>
+               <td>{{user.tname }}</td>
+               <td>{{ user.pword}}</td>
+               <td>{{ user.email }}</td>
+               <td>{{ user.mobile }}</td>
+                <td> {% for role in user.roles.all %}
+                        {{ role.rname }}|
+                    {% endfor %}
+                    </td>
+                <td>
+                    <a href="{% url 'userstart' user.id %}">{% if user.isactive %}
+                       启用
+                    {% else %}
+                        停用
+                    {% endif %}
+                    </a>
+                </td>
+
+
+
+                <td>
+                    <a href="{% url 'edituser' user.id %}"><i class="fa fa-edit"></i></a>|
+
+
+                    <a href="{% url 'deluser' user.id %}"><i class="fa fa-remove"></i></a>
+                       </td>
+
+            </tr>
+        {% endfor %}
+
+
+    </table>
+{% endblock %}
+{% block javascript %}
+{% endblock %}

@@ -1,0 +1,21 @@
+
+{% if menu_list %}
+    <div>{% for k,v in menu_list.items %}
+
+        <div class="first"><a class="list-group-item first-menu"><i
+                class="{{ v.ico }} fa-fw"></i><span>{{ v.title }}</span></a></div>
+
+        <div class="sub {{ v.class }}">
+            {% for sub_menu in v.child %}
+                <a href="{{ sub_menu.url }}" class="list-group-item  sub-menu {{ sub_menu.class }}">{{ sub_menu.title }}</a>
+            {% endfor %}
+
+        </div>
+
+
+    {% endfor %}
+    </div>
+{% else %}
+    <span>未获取到相应数据</span>
+{% endif %}
+

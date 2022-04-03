@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图标展示</title>
+
+    <link rel="stylesheet" href="/static/font-awesome-4.7.0/css/font-awesome.min.css">
+    <style>
+        ul{
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li {
+            margin: 0;
+            padding-left: 20px;
+            width: 10px;
+            display: inline-block;
+        }
+        ul li i {
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <i class="fa fa-camera-retro fa-lg"></i> fa-lg
+    <span><i class="fa fa-user fa-fw"></i>测试</span>
+    {% for headr,value in fonts.items %}
+       <ul><h1>{{ headr }}</h1>
+           {% for item in  value %}
+
+            <li>{{ item.font|safe }}</li>
+           {% endfor %}
+       </ul>
+    {% endfor %}
+    <li></li>
+
+</body>
+</html>

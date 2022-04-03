@@ -1,0 +1,20 @@
+{% extends 'basiclayout.html' %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    {% for user in user_model_form %}
+                    <div>{{ user.label }}{{ user }}</div><span style="color: red;font-size: 14px">{{ user.errors.0 }}</span>
+                    {% endfor %}
+                 <input type="submit"  class="btn btn-success btn-group-sm pull-right" value="提交">
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+{% endblock %}

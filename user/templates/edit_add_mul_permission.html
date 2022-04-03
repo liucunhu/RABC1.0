@@ -1,0 +1,147 @@
+{% extends 'basiclayout.html' %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-11 ">
+          <form method="post" action="?type=add">
+            {% csrf_token %}
+            {{ add_form_set.management_form }}
+
+                <div class="panel panel-success ">
+                  <!-- Default panel contents -->
+                    <div class="panel-heading"><i class="fa fa-binoculars fw"></i>待添加权限
+                           <button class="pull-right btn-success btn-xs " type="submit"><i class="fa fa-file fw"></i>新建</button>
+                    </div>
+
+                    <!-- Table -->
+                 {{ add_form_set.errors }}
+
+                      <table class="table">
+                          <tr>注意：路由系统自动发现数据库中不存在的路由</tr>
+                            <tr><td>序号</td>
+                                <td>名称</td>
+                                <td>路径</td>
+                                <td>上级菜单</td>
+                                <td>菜单名称</td>
+                                <td>别称</td>
+                                <td>是否为菜单</td>
+                            </tr>
+
+                            {% for data in add_form_set %}
+                                <tr>
+
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ data.title }}</td>
+                                    <td>{{ data.url }}</td>
+                                    <td>{{ data.pid }}</td>
+                                    <td>{{ data.menu_id }}</td>
+                                    <td>{{ data.url_name }}</td>
+                                    <td>{{ data.is_menu }}</td>
+                                </tr>
+
+                        {% endfor %}
+                      </table>
+
+                </div>
+
+
+        </form>
+        </div>
+
+
+    </div>
+    <div class="row">
+        <div class="col-xs-11 ">
+            <form method="post">
+
+                <div class="panel panel-success ">
+                  <!-- Default panel contents -->
+                  <div class="panel-heading"><i class="fa fa-reorder"></i>待删除的数据</div>
+                  <div><span>注意：删除数据库中有但路由系统中没有的数据</span></div>
+                  <!-- Table -->
+                  <table class="table">
+                    <tr><td>序号</td>
+                        <td>名称</td>
+                        <td>路径</td>
+                        <td>上级菜单</td>
+                        <td>菜单名称</td>
+                        <td>别称</td>
+                        <td>是否为菜单</td>
+                        <td>操作</td>
+                    </tr>
+                  {{ del_formset.management_form }}
+                    {% for data in del_formset %}
+
+                        <tr>{{ data.id }}
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ data.title }}</td><span>{{ data.titel.errors.0 }}</span>
+                            <td>{{ data.url }}</td>
+                            <td>{{ data.pid }}</td>
+                            <td>{{ data.menu_id }}</td>
+                            <td>{{ data.url_name }}</td>
+                            <td>{{ data.is_menu }}</td>
+                            <td><a href="{% url 'muladdpermission'   %}?id={{ data.id.value }}&type=delete"><i class="fa fa-trash-o"></i></a></td>
+                        </tr>
+
+                {% endfor %}
+                  </table>
+                </div>
+
+
+
+            </form>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-xs-11 ">
+            <form method="post" action="?type=update">
+
+                    <div class="panel panel-success ">
+                      <!-- Default panel contents -->
+                      <div class="panel-heading"><i class="fa fa-bank"></i>待更新列表<button class="pull-right btn btn-success btn-xs "><i class="fa fa-upload"></i>更新</button></div>
+                      <div><span>注意：更新路由系统和数据库中都存在的数据</span></div>
+                      <!-- Table -->
+                      <table class="table">
+                        <tr><td>序号</td>
+                            <td>名称</td>
+                            <td>路径</td>
+                            <td>上级菜单</td>
+                            <td>菜单名称</td>
+                            <td>别称</td>
+                            <td>是否为菜单</td>
+                            <td>操作</td>
+
+                        </tr>
+                      {% csrf_token %}
+
+
+                          {{ edit_formset.management_form }}
+                        {% for data in edit_formset %}
+
+
+                                {{ data.id }}
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ data.title }}</td>
+                                <td>{{ data.url }}</td>
+                                <td>{{ data.pid }}</td>
+                                <td>{{ data.menu_id }}</td>
+                                <td>{{ data.url_name }}</td>
+                                <td>{{ data.is_menu }}</td>
+
+                                <td><a href=" {% url 'muladdpermission' %}?id={{ data.id.value }}&type=delete"><i class="fa fa-trash-o"></i></a></td>
+                            </tr>
+
+                    {% endfor %}
+                      </table>
+                </div>
+
+
+
+            </form>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

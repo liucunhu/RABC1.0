@@ -1,0 +1,152 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>运维管理平台</title>
+    <script src="/static/jquery/jquery-3.6.0.min.js"></script>
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="/static/font-awesome-4.7.0/css/font-awesome.min.css">
+
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+        html,body{
+
+            height: 100%;
+        }
+       .site-head{
+           width:100%;
+           height: 50px;
+           color:#ffffff;
+           font-size: 20px;
+           line-height: 50px;
+       }
+        .site-head .head-left{
+            position: absolute;
+            top:0px;
+            left:0px;
+            width: 10%;
+            background-color: #16589f;
+            height: 50px;
+            text-align: center;
+
+        }
+         .site-head .head-right{
+            position: absolute;
+            top:0px;
+            left:10%;
+            height: 50px;
+            width: 90%;
+            background-color:#276fae;
+
+        }
+        {#.site-body{#}
+        {#    position: absolute;#}
+        {#    top:50px;#}
+        {#    left:0px;#}
+        {#    width:100%;#}
+        {#    height:100%;#}
+        {#    clear: both;#}
+        {##}
+        {#}#}
+        .site-body .body-left{
+             position: absolute;
+             top:50px;
+             left:0px;
+             width:10%;
+             height: 100%;
+             background-color: #e9edf1;
+
+         }
+        .site-body .body-right{
+             position: absolute;
+             top:50px;
+             left:10%;
+             width:90%;
+             height: 100%;
+             background-color: #ffffff;
+
+        }
+        .first-menu{
+
+            font-size: 16px;
+            background-color: #e9edf1;
+            padding: 10px 30px;
+            margin-bottom: -1px;
+
+        }
+        .sub-menu{
+
+            padding: 10px 50px;
+            font-size: 12px;
+            color:blue;
+
+
+
+        }
+        .hidden{
+            display: none;
+        }
+        {% block stylecss %}
+        {% endblock %}
+    </style>
+</head>
+{#<body style="overflow: hidden">#}
+<body>
+<div class="container-fluid">
+
+    <div class="site-head">
+        <div class="head-left"><i class="glyphicon glyphicon-fire " ></i>运维管理平台</div>
+        <div class="head-right">个人信息</div>
+    </div>
+    <div class="site-body">
+        <div class="body-left list-group">
+             {% load webtagplugs %}
+            {% display_menu request %}
+            {% block left-menu %}
+            {% endblock %}
+<a href="javascript:void(0)"></a>
+        </div>
+        <div class="body-right">
+            <div><ol class="breadcrumb">
+
+                 {% for crumb in request.breadcrumb %}
+                     {% if crumb.url %}
+                        <li><a href="{{crumb.url}}">{{ crumb.title }}</a></li>
+                     {% else %}
+                         <li class="active">{{ crumb.title }}</li>
+                     {% endif %}
+
+
+                 {% endfor %}
+            </ol></div>
+
+             {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+</div>
+{% block javascript %}
+{% endblock %}
+<script>
+    {#$('#payment').click(function(){#}
+    {#    $('#payment_query').toggleClass('hidden');#}
+    {#    alert($('.first-menu'))});#}
+
+
+         $('.first').click(function(){
+        {#$(this).toggleClass('active');#}
+        $(this).next('.sub').toggleClass('hidden');
+    });
+
+
+
+
+
+
+</script>
+</body>
+</html>
