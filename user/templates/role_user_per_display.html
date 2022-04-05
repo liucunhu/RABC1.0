@@ -1,6 +1,7 @@
 {% extends 'basiclayout.html' %}
 
 {% block content %}
+    {% load webtagplugs %}
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-3 user-list">
@@ -17,7 +18,9 @@
                     </tr>
                     {% if all_user %}
                         {% for user in all_user %}
-                            <tr>
+                            <tr {% if uid %}
+                                   {% displayrowcolor user uid %}
+                                {% endif %}>
                                 <td class="hidden">{{ user.id }}</td>
                                 <td>{{ forloop.counter }}</td>
                                 <td><a href="{% url 'displaydispachers'%}?uid={{ user.id }}">{{ user.uname }}</a></td>
@@ -58,17 +61,24 @@
                         </thead>
                         <tbody>
                         <input type="hidden" name="method_type" value="update_role">
+                        <input type="hidden" name="uid" value="{{ uid }}">
                             {% if all_role_info %}
                                 {% for role in all_role_info %}
-                                    <tr>
+                                   <tr {% if rid %}
+                                   {% displayrowcolor role rid %}
+                                {% endif %}>
+
                                         <span class="hidden">{{ role.id }}</span>
                                         <td>{{ forloop.counter }}</td>
                                         {% if role.id in user_has_role %}
-                                        <td> <input type="checkbox" value="{{ role.id }}" name="{{ role.id }}" checked></td>
+                                        <td> <input type="checkbox" value="{{ role.id }}" name="role_req" checked></td>
                                         {% else %}
-                                            <td> <input type="checkbox" value="{{ role.id }}" name="{{ role.id }}"></td>
+                                            <td> <input type="checkbox" value="{{ role.id }}" name="role_req"></td>
                                         {% endif %}
-                                        <td><a href="{% url 'displaydispachers'  %}?rid={{ role.id }} ">{{ role.rname }}</a></td>
+
+                                        <td><a href="{% url 'displaydispachers'  %}?rid={{ role.id }} ">
+
+                                            {{ role.rname }}</a></td>
                                     </tr>
                                 {% endfor %}
                             {% else %}
@@ -83,6 +93,7 @@
         </div>
         </form>
         <form method="post" action="{% url 'displaydispachers'  %}">
+            <input type="hidden" name="rid" value="{{ rid }}">
 
             <div class="col-md-6 per-list">
                     <div class="panel panel-success">
@@ -105,9 +116,9 @@
                                             {% for key ,sec_per in subper.items  %}
                                                 <tr  >
                                                     {% if sec_per.id in role_has_permission %}
-                                                    <td rowspan=""><input type="checkbox" name="{{ sec_per.id }}" name="{{ sec_per.id }}" checked>{{ sec_per.title }}</td>
+                                                    <td rowspan=""><input type="checkbox" name="permission_req" value="{{ sec_per.id }}" checked>{{ sec_per.title }}</td>
                                                     {% else %}
-                                                        <td><input type="checkbox" name="{{ sec_per.id }}" name="{{ sec_per.id }}" >{{ sec_per.title }}</td>
+                                                        <td><input type="checkbox" name="permission_req" value="{{ sec_per.id }}" >{{ sec_per.title }}</td>
 
                                                     {% endif %}
                                                 </tr>
@@ -115,9 +126,9 @@
                                                     {% for subitem in sec_per.children %}
                                                         {% for key,sub_per in subitem.items %}
                                                          {% if sub_per.id in role_has_permission %}
-                                                        <td><input type="checkbox" name="{{ sub_per.id }}" name="{{ sub_per.id }}" checked>{{ sub_per.title }}</td>
+                                                        <td><input type="checkbox" name="permission_req" value="{{ sub_per.id }}" checked>{{ sub_per.title }}</td>
                                                           {% else %}
-                                                              <td><input type="checkbox" name="{{ sub_per.id }}" name="{{ sub_per.id }}">{{ sub_per.title }}</td>
+                                                              <td><input type="checkbox" name="permission_req" value="{{ sub_per.id }}">{{ sub_per.title }}</td>
                                                             {% endif %}
                                                         {% endfor %}
                                                      {% endfor %}

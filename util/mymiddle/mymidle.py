@@ -5,7 +5,7 @@ import re
 class AuthMiddleware(MiddlewareMixin):
 
     def process_request(self,request):
-        white_list=[reverse('ulogin'),'/admin/.*?',reverse('fontslist')]
+        white_list=[reverse('ulogin'),'/admin/.*?']
         request.cur_id=None
 
         for  path in white_list:

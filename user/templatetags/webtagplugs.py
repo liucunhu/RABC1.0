@@ -27,3 +27,13 @@ def url_filter(url_name,request):
         return True
     else:
         return False
+@register.simple_tag
+def displayrowcolor(role,uid):
+    
+    if role.id==int(uid):
+        
+        return 'class=bg-info'
+    else:
+       
+        return None
+        
