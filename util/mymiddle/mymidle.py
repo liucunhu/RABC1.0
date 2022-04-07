@@ -29,9 +29,9 @@ class AuthMiddleware(MiddlewareMixin):
         permission=request.session.get('permission',None)
         #print(f'middle={permission}')
         #print(f'path={request.path}')
-        if 1:
+        if is_login:
             reg=request.path
-            print('middle>>',request.session.get('permission', None))
+            #print('middle>>',request.session.get('permission', None))
             for path in request.session.get('permission',None):
                 #print('>>',request.path,path['permissions__url'])
                 if re.match(path['permissions__url'],reg):
@@ -47,7 +47,7 @@ class AuthMiddleware(MiddlewareMixin):
                             if re.match(i['url'],request.path):
                                 value['class'] = ''
                                 i['class'] = 'active'
-                    #return
+                    return
 
                     request.breadcrumb =[
                         {'url': 'javascript:void(0)', 'title': '主页'},
@@ -88,9 +88,11 @@ class AuthMiddleware(MiddlewareMixin):
                        
                     #print(request.breadcrumb)
                     
-            return
+
+            else:
+                return HttpResponse('无权访问')
         
             
         else:
-            return
+            redirect('ulogin')
 
