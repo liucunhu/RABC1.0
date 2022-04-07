@@ -13,7 +13,7 @@ class AuthMiddleware(MiddlewareMixin):
 
             result=re.match(path,request.path)
             try:
-                pass
+               pass
                 #print('result=',result.group())
             except Exception as e:
                 print(e)
@@ -31,7 +31,7 @@ class AuthMiddleware(MiddlewareMixin):
         #print(f'path={request.path}')
         if 1:
             reg=request.path
-            
+            print('middle>>',request.session.get('permission', None))
             for path in request.session.get('permission',None):
                 #print('>>',request.path,path['permissions__url'])
                 if re.match(path['permissions__url'],reg):

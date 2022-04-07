@@ -61,7 +61,7 @@ urlpatterns = [
     re_path(r'^role/edit/(\d+)/',aboutRole.add_edit_role_info,name='roleedit'),
     re_path(r'^role/del/(\d+)',aboutRole.remove_role_info,name='roledel'),
     path('permissionlist/', PermissionView.as_view(), name='permissionlist'),
-    re_path(r'^dispatcherslist/',Dispatchers.display_role_per_user_info,name='displaydispachers'),
+    re_path(r'dispatcherslist/',Dispatchers.display_role_per_user_info,name='displaydispachers'),
     # re_path(r'^dispatchersrole/',Dispatchers.dispacherRole,name='dispacher_role'),
     # re_path(r'^dispatcherspermission/',Dispatchers.dispacherPermission,name='dispacher_permission'),
 

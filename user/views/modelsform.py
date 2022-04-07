@@ -87,7 +87,7 @@ class MenuModelForm(ModelForm):
 class MulPermission(ModelForm):
     class Meta:
         model=models.Permission
-        fields=['title','url','pid','menu_id','url_name','is_menu']
+        fields=['title','url','pid','menu_id','url_name','is_menu','weight']
         labels = {
             'menu_id': ('菜单编号'),
         }
@@ -100,6 +100,7 @@ class MulPermission(ModelForm):
             'weight': widgets.TextInput(),
             'url_name': widgets.TextInput(),
             'is_menu': widgets.CheckboxInput(attrs={"class": "checkbox"}),
+
 
         }
 

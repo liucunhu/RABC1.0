@@ -25,6 +25,7 @@
                                 <td>菜单名称</td>
                                 <td>别称</td>
                                 <td>是否为菜单</td>
+
                             </tr>
 
                             {% for data in add_form_set %}
@@ -37,6 +38,7 @@
                                     <td>{{ data.menu_id }}</td>
                                     <td>{{ data.url_name }}</td>
                                     <td>{{ data.is_menu }}</td>
+
                                 </tr>
 
                         {% endfor %}
@@ -67,6 +69,7 @@
                         <td>菜单名称</td>
                         <td>别称</td>
                         <td>是否为菜单</td>
+
                         <td>操作</td>
                     </tr>
                   {{ del_formset.management_form }}
@@ -80,6 +83,7 @@
                             <td>{{ data.menu_id }}</td>
                             <td>{{ data.url_name }}</td>
                             <td>{{ data.is_menu }}</td>
+
                             <td><a href="{% url 'muladdpermission'   %}?id={{ data.id.value }}&type=delete"><i class="fa fa-trash-o"></i></a></td>
                         </tr>
 
@@ -110,6 +114,7 @@
                             <td>菜单名称</td>
                             <td>别称</td>
                             <td>是否为菜单</td>
+
                             <td>操作</td>
 
                         </tr>
@@ -128,6 +133,7 @@
                                 <td>{{ data.menu_id }}</td>
                                 <td>{{ data.url_name }}</td>
                                 <td>{{ data.is_menu }}</td>
+
 
                                 <td><a href=" {% url 'muladdpermission' %}?id={{ data.id.value }}&type=delete"><i class="fa fa-trash-o"></i></a></td>
                             </tr>

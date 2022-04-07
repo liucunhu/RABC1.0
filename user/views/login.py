@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, reverse
 from user import models
 from django.views import View
+from user.utils.SafetyTool import CiphertextMaker
 import re
 
 class LoginView(View):
@@ -12,7 +13,9 @@ class LoginView(View):
     def post(self, request):
         uname = request.POST.get('name')
         pwd = request.POST.get('pwd')
-        userobj = models.UserInfo.objects.filter(uname=uname, pword=pwd, isactive=True).first()
+        genPassMd5=CiphertextMaker()
+        pword=genPassMd5.make_md5(pwd)
+        userobj = models.UserInfo.objects.filter(uname=uname, pword=pword, isactive=True).first()
 
 
         if userobj:
@@ -28,6 +31,7 @@ class LoginView(View):
                                               'permissions__menu_id__weight').order_by('-permissions__weight')
             request.session['is_login'] = True
             request.session['permission'] = list(permission)
+            print('>>>',list(permission))
             url_list = []
             menu_dict = {}
             #print(permission)
@@ -53,7 +57,7 @@ class LoginView(View):
             for per in permission:
                 permissionDict[per.get('permissions__id')]=per
 
-
+            print('>>',menu_dict)
             from collections import OrderedDict
             keys = sorted(menu_dict, key=lambda x: menu_dict[x]['weight'], reverse=True)
 

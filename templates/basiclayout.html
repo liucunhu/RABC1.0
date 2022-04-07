@@ -74,13 +74,13 @@
 
             font-size: 16px;
             background-color: #e9edf1;
-            padding: 10px 30px;
+            padding: 10px 10px;
             margin-bottom: -1px;
 
         }
         .sub-menu{
 
-            padding: 10px 50px;
+            padding: 10px 10px;
             font-size: 12px;
             color:blue;
 
@@ -97,38 +97,46 @@
 {#<body style="overflow: hidden">#}
 <body>
 <div class="container-fluid">
-
-    <div class="site-head">
-        <div class="head-left"><i class="glyphicon glyphicon-fire " ></i>运维管理平台</div>
-        <div class="head-right">个人信息</div>
-    </div>
-    <div class="site-body">
-        <div class="body-left list-group">
-             {% load webtagplugs %}
-            {% display_menu request %}
-            {% block left-menu %}
-            {% endblock %}
-<a href="javascript:void(0)"></a>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="site-head">
+            <div class="head-left"><i class="glyphicon glyphicon-fire " ></i>运维管理平台</div>
+            <div class="head-right">个人信息</div>
         </div>
-        <div class="body-right">
-            <div><ol class="breadcrumb">
+    </div>
+    <div class="site-body row">
+                <div class="body-left  list-group col-xs-3">
+                     {% load webtagplugs %}
+                    {% display_menu request %}
+                    {% block left-menu %}
+                    {% endblock %}
 
-                 {% for crumb in request.breadcrumb %}
-                     {% if crumb.url %}
-                        <li><a href="{{crumb.url}}">{{ crumb.title }}</a></li>
-                     {% else %}
-                         <li class="active">{{ crumb.title }}</li>
-                     {% endif %}
+                </div>
+            <div class="body-right col-xs-8">
+                <div><ol class="breadcrumb">
+
+                     {% for crumb in request.breadcrumb %}
+                         {% if crumb.url %}
+                            <li><a href="{{crumb.url}}">{{ crumb.title }}</a></li>
+                         {% else %}
+                             <li class="active">{{ crumb.title }}</li>
+                         {% endif %}
 
 
-                 {% endfor %}
-            </ol></div>
+                     {% endfor %}
+                </ol></div>
 
              {% block content %}
             {% endblock %}
         </div>
     </div>
+
+
 </div>
+
+
+
+
 {% block javascript %}
 {% endblock %}
 <script>
